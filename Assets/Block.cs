@@ -5,6 +5,10 @@ using Tetris;
 
 namespace Tetris{
 
+	enum Rotation {
+		Home, Clock, AntiClock, Flip
+	}
+
 	/// <summary>
 	/// A Block like T shape or L shape.
 	/// </summary>
@@ -35,10 +39,16 @@ namespace Tetris{
 		}
 
 		public void GoDownIfItCan(List<List<Cell>> stageCells) {
-			if (CanGoDown(stageCells)) {
-				GoDown();
+			if (CanGoDown(stageCells)) GoDown();
+		}
+
+		public void DoIfItCan(Operarion operarion, List<List<Cell>> stageCells) {
+			if(CanDo(operarion, stageCells)) {
+				// Porblem. Rotateの場合はrelational posを変える必要。
 			}
 		}
+
+
 
 		public bool CanDo(Operarion operarion, List<List<Cell>> stageCells) {
 			var absPoses = AbsolutePosiotions();
