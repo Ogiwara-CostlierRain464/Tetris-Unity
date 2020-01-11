@@ -6,16 +6,16 @@ public sealed class Game : GameBase
 
     public override void InitGame()
     {
-		Board = new Tetris.Board(gc);
+		Board = new Board(gc);
 
 		gc.SetResolution(
 			Companion.SCREEN_WIDTH,
-			Tetris.Companion.SCREEN_HEIGHT);
+			Companion.SCREEN_HEIGHT);
     }
     
     public override void UpdateGame()
     {
-		Board.Update(gc);
+		Board.Update();
     }
     
     public override void DrawGame()

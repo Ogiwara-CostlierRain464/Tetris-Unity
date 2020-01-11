@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Tetris;
 
@@ -7,7 +8,7 @@ namespace Tetris{
 	/// <summary>
 	/// A Block like T shape or L shape.
 	/// </summary>
-	public class Block {
+	public abstract class Block {
 		// e.g. ---- 
 		//  □
 		// □□□
@@ -33,17 +34,21 @@ namespace Tetris{
 				.ToList();
 		}
 
-		public bool CanGoDown(List<List<Cell>> stageCells) {
+		public void GoDownIfItCan(List<List<Cell>> stageCells) {
+			if (CanGoDown(stageCells)) {
+				GoDown();
+			}
+		}
+
+		public bool CanDo(Operarion operarion, List<List<Cell>> stageCells) {
 			var absPoses = AbsolutePosiotions();
 
 			var bottom = absPoses.Exists(e => e.IsBottom);
 			if (bottom) return false;
 
-			var whenGoDown = absPoses
-				.Select(pos => new StagePosiotion(pos.X, pos.Y + 1))
-				.ToList();
+			var whenOperation = WhenOperation(operarion, absPoses);
 
-			var collision = whenGoDown.Exists(absPos =>
+			var collision = whenOperation.Exists(absPos =>
 					stageCells.Exists(line =>
 						line.Exists(stageCell =>
 							stageCell.Position == absPos
@@ -53,8 +58,32 @@ namespace Tetris{
 
 			if (collision) return false;
 
-
 			return true;
+		}
+
+		private List<StagePosiotion> WhenOperation(Operarion operarion, List<StagePosiotion> posiotions) {
+			if(
+				operarion == Operarion.RotateClock
+				|| operarion == Operarion.RotateAntiClock) return WhenRotate(operarion, posiotions);
+
+			var adder =
+				operarion == Operarion.Down?
+					new StagePosiotion(0, 1):
+				operarion == Operarion.Left?
+					new StagePosiotion(-1, 0):
+				//default
+					new StagePosiotion(1, 0);
+
+			return posiotions
+				.Select(pos => pos + adder)
+				.ToList();
+		}
+
+		public abstract List<StagePosiotion> WhenRotate(Operarion operarion, List<StagePosiotion> posiotions);
+
+
+		public bool CanGoDown(List<List<Cell>> stageCells) {
+			return CanDo(Operarion.Down, stageCells);
 		}
 
 		public void GoDown() {

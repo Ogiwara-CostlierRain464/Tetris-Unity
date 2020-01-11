@@ -26,16 +26,7 @@ namespace Tetris{
 			.Select(index => new List<Cell>(WIDTH))
 			.ToList();
 
-			AcitveBlock = new Block(
-				new List<StagePosiotion> {
-					new StagePosiotion(1,0),
-					new StagePosiotion(1,1),
-					new StagePosiotion(2,1),
-					new StagePosiotion(2,2),
-				}
-			);
-
-			var a = new NewClass();
+			AcitveBlock = new Blocks.T();
 		}
 
 		void Step() {
@@ -60,14 +51,29 @@ namespace Tetris{
 		}
 
 		/// <summary>
-		/// Called each frames.
+		/// Called for each frames.
 		/// </summary>
-		/// <param name="gc"></param>
-		public void Update(Proxy gc) {
-			if (gc.GetIsKeyBegan(EKeyCode.Down)) {
+		public void Update() {
+			if (IsMoveTime()) {
 				Step();
-				Debug.Log(AcitveBlock);
 			}
+
+			if (gc.GetIsKeyBegan(EKeyCode.Down)) {
+				AcitveBlock.GoDownIfItCan(Blocks);
+			}
+		}
+
+		private int lastTime = 0;
+        
+        private bool IsMoveTime() {
+			var ceil = (int)gc.TimeSinceStartup;
+
+			if (lastTime < ceil) {
+				lastTime = ceil;
+				return true;
+			}
+
+			return false;
 		}
 
 		/// <summary>
