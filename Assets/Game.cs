@@ -27,11 +27,5 @@ public sealed class Game : GameBase
         gc.DrawImage(0, 0, 0);
 
 		Board.Draw();
-
-        // 黒の文字を描画します
-        gc.SetColor(0, 0, 0);
-        gc.SetFontSize(48);
-        gc.DrawString("この文字と青空の画像が", 40, 160);
-        gc.DrawString("見えていれば成功です", 40, 270);
     }
 }

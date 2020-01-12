@@ -138,15 +138,191 @@ namespace Tetris.Shapes{
 			}
 		}
 
-		// --
-		//  |
-		//  |
+		// □□
+		//  □
+		//  □
 		public List<StagePosiotion> Flip {
 			get {
 				return new List<StagePosiotion> {
 					new StagePosiotion(0,0),
 					new StagePosiotion(-1,-1),
 					new StagePosiotion(0,-1),
+					new StagePosiotion(0,1),
+				};
+			}
+		}
+	}
+
+	public class WaveLeft : IShape {
+
+		// □□
+		//  □□
+		public List<StagePosiotion> HomePosition {
+			get {
+				return new List<StagePosiotion> {
+					new StagePosiotion(-1,0),
+					new StagePosiotion(0,0),
+					new StagePosiotion(0,1),
+					new StagePosiotion(1,1),
+				};
+			}
+		}
+
+		//  □ 
+		// □□
+		// □
+		public List<StagePosiotion> RotateClock {
+			get {
+				return new List<StagePosiotion> {
+					new StagePosiotion(0,-1),
+					new StagePosiotion(0,0),
+					new StagePosiotion(-1,0),
+					new StagePosiotion(-1,1),
+				};
+			}
+		}
+
+		public List<StagePosiotion> RotateAntiClock {
+			get {
+				return RotateClock;
+			}
+		}
+
+		public List<StagePosiotion> Flip {
+			get {
+				return HomePosition;
+			}
+		}
+	}
+
+	public class WaveRight : IShape {
+
+		//  □□
+		// □□
+		public List<StagePosiotion> HomePosition {
+			get {
+				return new List<StagePosiotion> {
+					new StagePosiotion(0,0),
+					new StagePosiotion(1,0),
+					new StagePosiotion(-1,1),
+					new StagePosiotion(0,1),
+				};
+			}
+		}
+
+		// □ 
+		// □□
+		//  □
+		public List<StagePosiotion> RotateClock {
+			get {
+				return new List<StagePosiotion> {
+					new StagePosiotion(0,0),
+					new StagePosiotion(-1,0),
+					new StagePosiotion(-1,-1),
+					new StagePosiotion(0,1),
+				};
+			}
+		}
+
+		public List<StagePosiotion> RotateAntiClock {
+			get {
+				return RotateClock;
+			}
+		}
+
+		public List<StagePosiotion> Flip {
+			get {
+				return HomePosition;
+			}
+		}
+	}
+	
+	public class Box : IShape {
+
+		public List<StagePosiotion> HomePosition {
+			get {
+				return new List<StagePosiotion> {
+					new StagePosiotion(0,0),
+					new StagePosiotion(0,1),
+					new StagePosiotion(1,0),
+					new StagePosiotion(1,1),
+				};
+			}
+		}
+
+		//  □ 
+		// □□
+		// □
+		public List<StagePosiotion> RotateClock {
+			get {
+				return HomePosition;
+			}
+		}
+
+		public List<StagePosiotion> RotateAntiClock {
+			get {
+				return HomePosition;
+			}
+		}
+
+		public List<StagePosiotion> Flip {
+			get {
+				return HomePosition;
+			}
+		}
+	}
+
+	public class OppositeL : IShape {
+
+		//  □
+		//  □
+		// □□
+		public List<StagePosiotion> HomePosition {
+			get {
+				return new List<StagePosiotion> {
+					new StagePosiotion(0,-1),
+					new StagePosiotion(0,0),
+					new StagePosiotion(0,1),
+					new StagePosiotion(-1,1),
+				};
+			}
+		}
+
+		// □
+		// □□□
+		public List<StagePosiotion> RotateClock {
+			get {
+				return new List<StagePosiotion> {
+					new StagePosiotion(-1,-1),
+					new StagePosiotion(-1,0),
+					new StagePosiotion(0,0),
+					new StagePosiotion(1,0),
+				};
+			}
+		}
+
+		// □□□
+		//   □
+		public List<StagePosiotion> RotateAntiClock {
+			get {
+				return new List<StagePosiotion> {
+					new StagePosiotion(-1,0),
+					new StagePosiotion(0,0),
+					new StagePosiotion(1,0),
+					new StagePosiotion(1,1),
+				};
+			}
+		}
+
+		// □□
+		// □
+		// □
+		public List<StagePosiotion> Flip {
+			get {
+				return new List<StagePosiotion> {
+					new StagePosiotion(0,-1),
+					new StagePosiotion(1,-1),
+					new StagePosiotion(0,0),
 					new StagePosiotion(0,1),
 				};
 			}

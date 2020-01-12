@@ -19,10 +19,7 @@ namespace Tetris{
 		public Board(Proxy gc) {
 			this.gc = gc;
 
-			AcitveBlock = new Block(
-				new Shapes.T(),
-				Color.green
-			);
+			AcitveBlock = ChooseNextBlock();
 		}
 
 		void Step() {
@@ -36,8 +33,9 @@ namespace Tetris{
 				Debug.Log("Can't go down anymore.");
 				Debug.Log(Blocks);
 				// add to cells
-				//RemoveDeletableLines();
+
 				AddActiveBlockToCellsAndNewActiveBlock();
+				RemoveDeletableLines();
 			}
 
 		}
@@ -53,7 +51,23 @@ namespace Tetris{
 				.ToList()
 				.ForEach(cell => Blocks.Add(cell));
 
-			AcitveBlock = new Block(new Shapes.I(), Color.blue);
+			AcitveBlock = ChooseNextBlock();
+		}
+
+		private Block ChooseNextBlock() {
+			var list = new List<Block> {
+				new Block(new Shapes.WaveLeft(), Color.red),
+				new Block(new Shapes.L(), new Color(1, 0.647f, 0,1)),
+				new Block(new Shapes.Box(), Color.yellow),
+				new Block(new Shapes.WaveRight(), Color.green),
+				new Block(new Shapes.I(), Color.cyan),
+				new Block(new Shapes.OppositeL(), Color.blue),
+				new Block(new Shapes.T(), new Color(0.5f, 0, 0.5f,1)),
+			};
+
+			var code = gc.Random(0, 6);
+
+			return list[code];
 		}
 
 		/// <summary>
@@ -116,14 +130,57 @@ namespace Tetris{
 		}
 
 		void RemoveDeletableLines() {
-			// check for under 4 lines.
-			Enumerable.Range(0, 4).ToList().ForEach(index => {
-				
+			// check for each lines.
+			// if deleted, move down all blocks for count of deleted lines.
+			// it is clear that maimum delete lines are 4 because of shape.
+
+			// first, count for each lines.
+			
+			var counts = Enumerable
+				.Range(0, Companion.STAGE_HEIGHT)
+				.Select(_ => 0)
+				.ToList();
+
+			Blocks.ForEach(cell => {
+				var y = cell.Position.Y;
+
+				counts[y] += 1;
 			});
+
+
+			var deleteLines = counts
+				.Select((item, index) => new { item, index })
+				.Where(e => e.item == Companion.STAGE_WIDTH)
+				.Select(e => e.index)
+				.ToList();
+
+			Debug.Log("Delete for line:" + counts);
+
+			if (deleteLines.Count == 0) return;
+
+			// delete lines.
+			Blocks = Blocks
+				.Where(cell => !deleteLines.Contains(cell.Position.Y))
+				.ToList();
+
+			var deleteLineCount = deleteLines.Count;
+			var moveUpOn = deleteLines.Max();
+
+			Blocks = Blocks
+				.Select(cell => {
+					if (cell.Position.Y < moveUpOn) {
+						cell.Position = new StagePosiotion(
+							cell.Position.X,
+							cell.Position.Y + deleteLineCount
+						);
+					}
+
+					return cell;
+				})
+				.ToList();
+
 		}
 
-		bool LineCanRemove(List<Cell> line) =>
-			line.Count == Companion.STAGE_WIDTH;
 
 	}
 }
