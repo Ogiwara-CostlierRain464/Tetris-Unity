@@ -9,8 +9,6 @@ namespace Tetris{
 	}
 
 	public class Board {
-		const int WIDTH = 10;
-		const int HEIGHT = 30;
 
 		// [[Cell;WIDTH]; HEIGHT]
 		List<List<Cell>> Blocks = null;
@@ -22,13 +20,13 @@ namespace Tetris{
 			this.gc = gc;
 
 			Blocks = Enumerable
-			.Range(0, HEIGHT)
-			.Select(index => new List<Cell>(WIDTH))
+			.Range(0, Companion.STAGE_HEIGHT)
+			.Select(index => new List<Cell>(Companion.STAGE_WIDTH))
 			.ToList();
 
 			AcitveBlock = new Block(
 				new Shapes.T(),
-				Color.Green
+				Color.green
 			);
 		}
 
@@ -43,14 +41,18 @@ namespace Tetris{
 				Debug.Log("Can't go down anymore.");
 				// add to cells
 				RemoveDeletableLines();
-
+				AddActiveBlockToCellsAndNewActiveBlock();
 			}
 
 		}
 
-
+		/// <summary>
+		/// Add ActiveBlock to `Blocks`, and add new ActiveBlock.
+		/// </summary>
 		private void AddActiveBlockToCellsAndNewActiveBlock() {
+			var absPoses = AcitveBlock.AbsolutePosiotions();
 
+			
 		}
 
 		/// <summary>
@@ -99,8 +101,10 @@ namespace Tetris{
 			Blocks.ForEach(line => line.ForEach(e => e.Draw(this)));
 		}
 
-		public void DrawAt(StagePosiotion pos) {
+		public void DrawAt(StagePosiotion pos, Color color) {
 			var pixelPos = pos.ToAbsolutePosition();
+
+			gc.SetColor(color);
 
 			gc.FillRect(
 				pixelPos.x,
@@ -120,7 +124,7 @@ namespace Tetris{
 		}
 
 		bool LineCanRemove(List<Cell> line) =>
-			line.Count == WIDTH;
+			line.Count == Companion.STAGE_WIDTH;
 
 	}
 }

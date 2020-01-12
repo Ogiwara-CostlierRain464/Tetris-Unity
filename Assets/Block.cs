@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Tetris.Shapes;
+using UnityEngine;
 
 namespace Tetris {
 
@@ -152,7 +153,7 @@ namespace Tetris {
 
 		public void Draw(Board board) {
 			AbsolutePosiotions()
-				.ForEach(absPos => board.DrawAt(absPos));
+				.ForEach(absPos => board.DrawAt(absPos, Color));
 
 		}
 

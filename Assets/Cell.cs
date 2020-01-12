@@ -1,9 +1,6 @@
-﻿namespace Tetris{
+﻿using UnityEngine;
 
-	public enum Color {
-		Red, Yellow, Green
-	}
-
+namespace Tetris{
 	/// <summary>
 	/// A 1x1 cell.
 	/// </summary>
@@ -18,7 +15,7 @@
 		}
 
 		public void Draw(Board board) {
-			board.DrawAt(Position);
+			board.DrawAt(Position, Color);
 		}
 	}
 }
