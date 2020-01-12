@@ -20,12 +20,13 @@ public sealed class Game : GameBase
     
     public override void DrawGame()
     { 
-        // 画面を白で塗りつぶします
         gc.ClearScreen();
-
-        // 0番の画像を描画します
         gc.DrawImage(0, 0, 0);
 
-		Board.Draw();
+        gc.SetColor(0,0,0);
+        gc.SetFontSize(24);
+        gc.DrawString("矢印キーで移動、\nJとKで回転", 20, 20);
+
+        Board.Draw();
     }
 }

@@ -10,7 +10,6 @@ namespace Tetris{
 
 	public class Board {
 
-		// [[Cell;WIDTH]; HEIGHT]
 		List<Cell> Blocks = new List<Cell>();
 		Block AcitveBlock = null;
 

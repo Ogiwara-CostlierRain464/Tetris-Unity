@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Keio University
-  productName: GameCanvas
+  companyName: ogiwara
+  productName: Tetris
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -152,7 +152,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: unity.KeioUniversity.GameCanvas
+    Android: jp.ogiwara.Tetris
     Standalone: unity.Keio University.GameCanvas
     Tizen: jp.ac.keio.sfc.sdp
     iOS: jp.ac.keio.sfc.sdp
@@ -160,7 +160,7 @@ PlayerSettings:
   buildNumber:
     iOS: 0
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 16
+  AndroidMinSdkVersion: 21
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0
   aotOptions: 
@@ -245,7 +245,7 @@ PlayerSettings:
   clonedFromGUID: 00000000000000000000000000000000
   templatePackageId: 
   templateDefaultScene: 
-  AndroidTargetArchitectures: 2
+  AndroidTargetArchitectures: 4
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: 
@@ -815,7 +815,7 @@ PlayerSettings:
     Android: 1
     iOS: 1
   scriptingBackend:
-    Android: 1
+    Android: 0
     Standalone: 0
     WebGL: 1
     iOS: 1
