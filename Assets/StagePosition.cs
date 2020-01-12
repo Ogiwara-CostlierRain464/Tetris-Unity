@@ -11,15 +11,10 @@ namespace Tetris{
 	/// </summary>
 
 	public class StagePosiotion {
-		// 0 ~ STAGE_WIDTH-1
 		public readonly int X;
-		// 0 ~ STAGE_HEIGHT-1
 		public readonly int Y;
 
 		public StagePosiotion(int x, int y) {
-			Debug.Assert(x <= Companion.STAGE_WIDTH - 1);
-			Debug.Assert(y <= Companion.STAGE_HEIGHT - 1);
-
 			X = x; Y = y;
 		}
 
@@ -37,11 +32,23 @@ namespace Tetris{
 			);
 
 		/// <summary>
-		/// Gets if it's in bottom(on floor).
+		/// Gets if this position is out of stage
+		/// when position is absolute position.
 		/// </summary>
+		public bool IsOutOfStage {
+			get {
+				return
+					X < 0 ||
+					X > Companion.STAGE_WIDTH - 1 ||
+					Y < 0 ||
+					Y > Companion.STAGE_HEIGHT - 1;
+
+			}
+		}
+
 		public bool IsBottom {
 			get {
-				return Y == Companion.STAGE_HEIGHT - 1;
+				return Y == Companion.SCREEN_HEIGHT - 1;
 			}
 		}
 	}

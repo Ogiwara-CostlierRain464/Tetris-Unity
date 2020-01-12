@@ -4,7 +4,7 @@ using GameCanvas;
 using UnityEngine;
 
 namespace Tetris{
-    public enum Operarion {
+    public enum Operation {
 		Down, Right, Left, RotateClock, RotateAntiClock
 	}
 
@@ -26,16 +26,19 @@ namespace Tetris{
 			.Select(index => new List<Cell>(WIDTH))
 			.ToList();
 
-			AcitveBlock = new Blocks.T();
+			AcitveBlock = new Block(
+				new Shapes.T(),
+				Color.Green
+			);
 		}
 
 		void Step() {
 			// down active blocks.
 			// when active block can go donw, go down
 			// when cannot, delete some lines.
-			if (AcitveBlock.CanGoDown(Blocks)) {
-				Debug.Log("Going down.");
-				AcitveBlock.GoDown();
+			if (AcitveBlock.CanDo(Operation.Down, Blocks)) {
+				Debug.Log("Going down. Pos:" + AcitveBlock.BasePosition);
+				AcitveBlock.Do(Operation.Down);
 			} else {
 				Debug.Log("Can't go down anymore.");
 				// add to cells
@@ -59,7 +62,19 @@ namespace Tetris{
 			}
 
 			if (gc.GetIsKeyBegan(EKeyCode.Down)) {
-				AcitveBlock.GoDownIfItCan(Blocks);
+				AcitveBlock.DoIfItCan(Operation.Down ,Blocks);
+			}
+			if (gc.GetIsKeyBegan(EKeyCode.Left)) {
+				AcitveBlock.DoIfItCan(Operation.Left, Blocks);
+			}
+			if (gc.GetIsKeyBegan(EKeyCode.Right)) {
+				AcitveBlock.DoIfItCan(Operation.Right, Blocks);
+			}
+			if (gc.GetIsKeyBegan(EKeyCode.J)) {
+				AcitveBlock.DoIfItCan(Operation.RotateAntiClock, Blocks);
+			}
+			if (gc.GetIsKeyBegan(EKeyCode.K)) {
+				AcitveBlock.DoIfItCan(Operation.RotateClock, Blocks);
 			}
 		}
 
