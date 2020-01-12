@@ -44,7 +44,7 @@ namespace Tetris {
 				Shape.Flip;	
 
 
-		public void DoIfItCan(Operation operation, List<List<Cell>> stageCells) {
+		public void DoIfItCan(Operation operation, List<Cell> stageCells) {
 			if(CanDo(operation, stageCells)) {
 				Do(operation);
 			}
@@ -59,7 +59,7 @@ namespace Tetris {
 			}
 		}
 
-		public bool CanDo(Operation operarion, List<List<Cell>> stageCells) {
+		public bool CanDo(Operation operarion, List<Cell> stageCells) {
 			// if it's out of range or collision when operation,
 			//then it cannot move with the operation.
 
@@ -69,10 +69,8 @@ namespace Tetris {
 			if (outOfStage) return false;
 
 			var collision = whenOperation.Exists(absPos =>
-					stageCells.Exists(line =>
-						line.Exists(stageCell =>
-							stageCell.Position == absPos
-						)
+					stageCells.Exists(stageCell =>
+						stageCell.Position == absPos
 					)
 				);
 

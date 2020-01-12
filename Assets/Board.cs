@@ -11,18 +11,13 @@ namespace Tetris{
 	public class Board {
 
 		// [[Cell;WIDTH]; HEIGHT]
-		List<List<Cell>> Blocks = null;
+		List<Cell> Blocks = new List<Cell>();
 		Block AcitveBlock = null;
 
 		private Proxy gc;
 
 		public Board(Proxy gc) {
 			this.gc = gc;
-
-			Blocks = Enumerable
-			.Range(0, Companion.STAGE_HEIGHT)
-			.Select(index => new List<Cell>(Companion.STAGE_WIDTH))
-			.ToList();
 
 			AcitveBlock = new Block(
 				new Shapes.T(),
@@ -35,12 +30,13 @@ namespace Tetris{
 			// when active block can go donw, go down
 			// when cannot, delete some lines.
 			if (AcitveBlock.CanDo(Operation.Down, Blocks)) {
-				Debug.Log("Going down. Pos:" + AcitveBlock.BasePosition);
+				//Debug.Log("Going down. Pos:" + AcitveBlock.BasePosition);
 				AcitveBlock.Do(Operation.Down);
 			} else {
 				Debug.Log("Can't go down anymore.");
+				Debug.Log(Blocks);
 				// add to cells
-				RemoveDeletableLines();
+				//RemoveDeletableLines();
 				AddActiveBlockToCellsAndNewActiveBlock();
 			}
 
@@ -52,7 +48,12 @@ namespace Tetris{
 		private void AddActiveBlockToCellsAndNewActiveBlock() {
 			var absPoses = AcitveBlock.AbsolutePosiotions();
 
-			
+			absPoses
+				.Select(absPos => new Cell(absPos, AcitveBlock.Color))
+				.ToList()
+				.ForEach(cell => Blocks.Add(cell));
+
+			AcitveBlock = new Block(new Shapes.I(), Color.blue);
 		}
 
 		/// <summary>
@@ -98,7 +99,7 @@ namespace Tetris{
 		/// </summary>
 		public void Draw() {
 			AcitveBlock.Draw(this);
-			Blocks.ForEach(line => line.ForEach(e => e.Draw(this)));
+			Blocks.ForEach(e => e.Draw(this));
 		}
 
 		public void DrawAt(StagePosiotion pos, Color color) {
@@ -115,11 +116,9 @@ namespace Tetris{
 		}
 
 		void RemoveDeletableLines() {
+			// check for under 4 lines.
 			Enumerable.Range(0, 4).ToList().ForEach(index => {
-				var line = Blocks[index];
-				if (LineCanRemove(line)) {
-					Blocks.Remove(line);
-				}
+				
 			});
 		}
 

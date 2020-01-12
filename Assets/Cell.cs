@@ -17,5 +17,9 @@ namespace Tetris{
 		public void Draw(Board board) {
 			board.DrawAt(Position, Color);
 		}
+
+		public override string ToString() {
+			return Position.ToString();
+		}
 	}
 }
